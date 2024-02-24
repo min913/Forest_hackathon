@@ -4,7 +4,7 @@ Healing effect prediction:
 - 기능: 산림 치유 효과(운동량 위주) 예측 
 - data.csv: 산림빅데이터 거래소의 "산림치유 효과분석 건강측정정보" 데이터 
 - pred: 결과 값
-- 사용 모델: xgboost
+- 사용 모델: XGboost
 
 
 Recommendation:
