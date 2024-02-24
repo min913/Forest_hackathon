@@ -1,0 +1,26 @@
+import pandas as pd
+from sklearn.preprocessing import LabelEncoder
+from sklearn.model_selection import train_test_split
+import lightgbm as lgb
+from sklearn.metrics import accuracy_score
+
+#전처리
+df = pd.read_csv('data.csv')
+df = df.drop(['pref_prgrm_id', 'extrc_word_nm', 'info_obtn_dt', 'info_obtn_site_url', 'info_obtn_site_subjc_nm'], axis=1)
+df = df.dropna()
+
+le = LabelEncoder()
+for col in df.columns:
+    if df[col].dtype == 'object':
+        df[col] = le.fit_transform(df[col])
+X = df.drop('pref_mnfrs_hlng_prgrm_nm', axis=1)
+y = df['pref_mnfrs_hlng_prgrm_nm']
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+#모델링
+model = lgb.LGBMClassifier(n_estimators=100, max_depth=-1, random_state=42)
+model.fit(X_train, y_train)
+
+pred = model.predict(X_test)
+accuracy = accuracy_score(y_test, pred)
+print(f'Accuracy: {accuracy}')
