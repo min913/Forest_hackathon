@@ -19,7 +19,7 @@ class Healing prediction:
     
     def predict_healing_effect(self):
         if self.validate_input():
-            return '36kcal'
+            return 36
         else:
             return 'error'
     
