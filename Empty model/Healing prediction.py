@@ -1,4 +1,4 @@
-class HealthEffectPredictor:
+class Healing prediction:
     def __init__(self, height, weight, gender, program):
         self.height = height
         self.weight = weight
@@ -17,7 +17,7 @@ class HealthEffectPredictor:
             return False
         return True
     
-    def predict_health_effect(self):
+    def predict_healing_effect(self):
         if self.validate_input():
             return '36kcal'
         else:
