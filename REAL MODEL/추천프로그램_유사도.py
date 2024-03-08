@@ -1,14 +1,4 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-# In[11]:
-
-
 get_ipython().system('pip install sentence-transformers')
-
-
-# In[49]:
-
 
 from sentence_transformers import SentenceTransformer, util
 import pandas as pd
@@ -21,40 +11,12 @@ import os
 import time
 
 
-# In[15]:
-
-
 #데이터 불러오기
 prefer_exp =  pd.read_csv(r"C:\Users\user\Desktop\산림데이터 공모전\데이터\전처리완료\체험프로그램_선호정보.csv")
 program_exp = pd.read_csv(r"C:\Users\user\Desktop\산림데이터 공모전\데이터\전처리완료\산림체험프로그램목록.csv")
-
-
-# In[ ]:
-
-
-prefer_exp
-
-
-# In[25]:
-
-
-'''
-for i in prefer_exp:
-    prefer= prefer_exp[['성별', '직업', '자녀여부', '연령대']].agg(' '.join, axis=1)
-    print(prefer)
-    prefer
-'''
-
-
-# In[46]:
-
-
 prgm=list(program_exp['제목'])
 
-
-# In[57]:
-
-
+#유저 정보 입력 및 유저와 유사한 기존 검색 사용자 찾기
 def user_info(df):
     gender = input("성별을 입력해주세요: ")
     job = input("직업을 입력해주세요: ")
@@ -74,24 +36,7 @@ def user_info(df):
     
 
 
-# In[60]:
-
-
-print(user_info(prefer_exp)) 
-
-sentence1 = '집에 갈래'
-sentence1 = '집에 안갈래'
-
-start_time = time.time()
-calculate_similarity(sentence1, sentence2)
-end_time = time.time()  # 함수 실행 후 현재 시간 측정
-execution_time = end_time - start_time
-print(f"Execution time: {execution_time} seconds")
-
-
-# In[42]:
-
-
+#문장 유사도 계산 -> 프로그램 간 유사도 계산산
 def calculate_similarity(sentence1, sentence2):
     # 모델 로드 (예: 'all-MiniLM-L6-v2')
     model = SentenceTransformer('all-MiniLM-L6-v2')
@@ -106,7 +51,7 @@ def calculate_similarity(sentence1, sentence2):
     return cosine_similarity.item()
 
 
-
+#최대 유사도 찾아서 index 계산
 def max_similarity(sentence, sentence_list):
     similarities = []
     
@@ -127,12 +72,9 @@ def max_similarity(sentence, sentence_list):
     
 
 
-# In[58]:
-
-
+# 최종 추출 함수
 def recommend():
     start_time = time.time()
-    
     selected_preferences =user_info(prefer_exp)
     outputs=[]
     for u in selected_preferences:
@@ -148,22 +90,3 @@ def recommend():
     print(f"Execution time: {execution_time} seconds")
     return outputs
     
-
-
-# In[ ]:
-
-
-recommend()
-
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
-
-
-
-
