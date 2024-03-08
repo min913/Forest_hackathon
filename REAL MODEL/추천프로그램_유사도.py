@@ -38,9 +38,9 @@ def user_info(df):
 
 #문장 유사도 계산 -> 프로그램 간 유사도 계산산
 def calculate_similarity(sentence1, sentence2):
-    # 모델 로드 (예: 'all-MiniLM-L6-v2')
+    
     model = SentenceTransformer('all-MiniLM-L6-v2')
-
+    
     # 문장을 임베딩으로 변환
     embedding1 = model.encode(sentence1, convert_to_tensor=True)
     embedding2 = model.encode(sentence2, convert_to_tensor=True)
