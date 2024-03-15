@@ -3,15 +3,35 @@ import pandas as pd
 import os
 from datetime import datetime
 import math
+import logging
 
-my_path = os.path.abspath(os.path.dirname(__file__))
+logger = logging.getLogger("uvicorn")
+logger.setLevel(logging.INFO)
+
+my_path = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 
 # 데이터 불러오기
-prefer_exp_data = os.path.join(my_path, "datasets/exp_preference_data.csv")
-prefer_healing_data = os.path.join(my_path, "datasets/healing_preference_data.csv")
-program_list_data = os.path.join(my_path, "../datasets/program_list.csv")
+prefer_exp_data = pd.read_csv(os.path.join(my_path, "datasets/exp_preference_data.csv"))
+prefer_healing_data = pd.read_csv(
+    os.path.join(my_path, "datasets/healing_preference_data.csv")
+)
+program_list_data = pd.read_csv(os.path.join(my_path, "datasets/program_list.csv"))
 
 model = SentenceTransformer("all-MiniLM-L6-v2")
+
+
+def __get_embedding(sentence):
+    return model.encode(sentence)
+
+
+exp_list_df = program_list_data.loc[program_list_data["category"] == "숲 체험", :].reset_index(drop=True)
+healing_list_df = program_list_data.loc[program_list_data["category"] == "산림 치유원", :].reset_index(drop=True)
+
+print(exp_list_df)
+print(healing_list_df)
+
+exp_list_df["name_embedding"] = exp_list_df.apply(lambda x: __get_embedding(x["name"]), axis=1)
+healing_list_df["name_embedding"] = exp_list_df.apply(lambda x: __get_embedding(x["name"]), axis=1)
 
 
 # 유저 정보 입력 및 유저와 유사한 기존 검색 사용자 찾기
@@ -41,15 +61,6 @@ def __calculate_similarity(embedding1, embedding2):
     # 코사인 유사도 계산
     cosine_similarity = util.pytorch_cos_sim(embedding1, embedding2)
     return cosine_similarity.item()
-
-
-def __get_embedding(sentence):
-    return model.encode(sentence)
-
-
-program_list_data["name_embedding"] = program_list_data.apply(
-    lambda x: __get_embedding(x["name"]), axis=1
-)
 
 
 # 최대 유사도 찾아서 index 계산
@@ -83,28 +94,24 @@ def __get_outputs(prefer_df, list_data, birth_year, gender, job, has_children):
     selected_preferences = __get_selected_preferences(
         prefer_df, birth_year, gender, job, has_children
     )
-    outputs = []
+    all_indexes = []
     for u in selected_preferences:
+        embedding = __get_embedding(u)
         # 각 선호도에 대한 가장 유사한 프로그램 인덱스 찾기
-        output_indexes = __max_similarity(u, list_data)
+        output_indexes = __max_similarity(embedding, list_data["name_embedding"])
         # 가장 유사한 프로그램의 인덱스를 사용하여 프로그램 선택
+
         for index in output_indexes:
-            outputs.append(list_data[index])
-    return outputs
+            all_indexes.append(index)
+    return list_data.loc[all_indexes, :].reset_index(drop=True)
 
 
 def run(birth_year, gender, job, has_children):
-    exp_idx = program_list_data["category"] == "산림체험"
-    healing_idx = program_list_data["category"] == "산림 치유원"
-
-    exp_df = program_list_data.loc[exp_idx, :]
-    healing_df = program_list_data.loc[healing_idx, :]
-
     exp_outputs = __get_outputs(
-        prefer_exp_data, exp_df, birth_year, gender, job, has_children
+        prefer_exp_data, exp_list_df, birth_year, gender, job, has_children
     )
     healing_outputs = __get_outputs(
-        prefer_healing_data, healing_df, birth_year, gender, job, has_children
+        prefer_healing_data, healing_list_df, birth_year, gender, job, has_children
     )
 
-    return pd.concat([exp_outputs, healing_outputs])
+    return pd.concat([exp_outputs, healing_outputs]).reset_index(drop=True)
