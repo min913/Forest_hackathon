@@ -23,6 +23,3 @@ def find_closest_location(mtn, input_coord):
 
 
 
-# 함수 호출 예제
-input_coord = {'lat': 128.950001, 'lng': 37.600002} #사용자 위치
-closest_location = find_closest_location(mtn, input_coord) #함수 부르기
