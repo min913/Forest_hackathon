@@ -1,4 +1,20 @@
-def find_closest_calories(way_effect, input_km, input_height, input_weight):
+
+import logging
+import os
+import numpy as np
+import pandas as pd
+import ast
+from fastapi import Depends, FastAPI, HTTPException, Request
+from . import effect_exp_healing, effect_forest_hiking
+
+logger = logging.getLogger("uvicorn")
+logger.setLevel(logging.INFO)
+
+my_path = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+forest_calorie_data = pd.read_csv(os.path.join(my_path, "datasets/forest_calorie_data.csv"))
+
+def __find_closest_calories(way_effect, input_km, input_height, input_weight):
+    
     # 운동거리 차이 계산
     way_effect['운동거리_차이'] = abs(way_effect['운동거리'] - input_km)
     # 운동거리 차이를 기준으로 정렬 후 상위 5개 행 선택
@@ -11,3 +27,6 @@ def find_closest_calories(way_effect, input_km, input_height, input_weight):
     
     # 해당 행의 칼로리 값 반환
     return closest_row['칼로리']
+
+def run(input_km, input_height, input_weight):
+    __find_closest_calories(forest_calorie_data, input_km, input_height, input_weight)

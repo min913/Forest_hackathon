@@ -1,4 +1,19 @@
-def find_calories(input_km, input_sex, input_age, df):
+
+import logging
+import os
+import numpy as np
+import pandas as pd
+import ast
+from fastapi import Depends, FastAPI, HTTPException, Request
+from . import effect_exp_healing, effect_forest_hiking
+
+logger = logging.getLogger("uvicorn")
+logger.setLevel(logging.INFO)
+
+my_path = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+hiking_calorie_data = pd.read_csv(os.path.join(my_path, "datasets/hiking_calorie_data.csv"))
+
+def __find_closest_calories( df,input_km, input_sex, input_age,):
     # 거리 차이 계산 및 정렬
     df['거리차이'] = abs(df['거리'] - input_km)
     sorted_df = df.sort_values(by='거리차이').head(5)
@@ -15,3 +30,7 @@ def find_calories(input_km, input_sex, input_age, df):
 
     # 가장 거리 차이가 적은 행의 칼로리 반환
     return sorted_df.iloc[0]['칼로리']
+
+
+def run(input_km, input_sex, input_age,):
+    __find_closest_calories(hiking_calorie_data, input_km, input_sex, input_age)

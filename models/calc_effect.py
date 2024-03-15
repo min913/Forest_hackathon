@@ -4,7 +4,7 @@ import numpy as np
 import pandas as pd
 import ast
 from fastapi import Depends, FastAPI, HTTPException, Request
-from . import effect_exp_healing, effect_forest_hiking
+from . import effect_exp_healing, effect_forest, effect_hiking
 
 logger = logging.getLogger("uvicorn")
 logger.setLevel(logging.INFO)
@@ -20,10 +20,9 @@ def run(program_id=int, height=float, age=int, gender=str, weight=float):
 
     program = _program[0]
 
-    effect = (
-        effect_exp_healing.run(height, age, gender, weight)
-        if program["category"].isin(["숲 체험", "산림 치유원"])
-        else effect_forest_hiking.run()
-    )
-
-    return effect
+    if program["category"].isin(["숲 체험", "산림 치유원"]):
+        return effect_exp_healing.run(height, age, gender, weight)
+    elif program["category"] == "숲 길":
+        return effect_forest.run()
+    else:
+        return effect_hiking.run()
