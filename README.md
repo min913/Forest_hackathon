@@ -35,7 +35,7 @@
    
     -output: float
 
-    -사용 예시
+    -사용 예시_숲길
 
    함수 사용 예시 인풋
    input_km = 0.2
@@ -46,7 +46,13 @@
    calories = find_closest_calories(way_effect, input_km, input_height, input_weight)
    print(calories)
  
- 
+ -사용 예시_숲길
+
+#함수 호출 예제
+
+input_coord = {'lat': 128.950001, 'lng': 37.600002} #사용자 위치
+
+closest_location = find_closest_location(mtn, input_coord) #함수 부르기
 
 
 ## Recommendation:
