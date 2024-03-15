@@ -1,0 +1,17 @@
+def find_calories(input_km, input_sex, input_age, df):
+    # 거리 차이 계산 및 정렬
+    df['거리차이'] = abs(df['거리'] - input_km)
+    sorted_df = df.sort_values(by='거리차이').head(5)
+
+    # 성별과 나이가 모두 일치하는 행 찾기
+    exact_match = sorted_df[(sorted_df['성별'] == input_sex) & (sorted_df['나이'] == input_age)]
+    if not exact_match.empty:
+        return exact_match['칼로리'].values[0]
+
+    # 성별이나 나이 중 하나라도 일치하는 행 찾기
+    partial_match = sorted_df[(sorted_df['성별'] == input_sex) | (sorted_df['나이'] == input_age)]
+    if not partial_match.empty:
+        return partial_match.iloc[0]['칼로리']
+
+    # 가장 거리 차이가 적은 행의 칼로리 반환
+    return sorted_df.iloc[0]['칼로리']
