@@ -23,7 +23,8 @@
 
 3. 숲길, 등산로 운동량
     
-    -숲길_input_df: result_df(최종/숲길칼로리.csv)
+    -숲길_input_df: result_df(최종/숲길 칼로리.csv)
+    -등산로_input_df: result_df(최종/등산로 칼로리.csv) *아직 업로드x
    
     -input_parameter: 등산로 거리(input_km), 사용자 정보(input_height, input_weight)
    
@@ -31,6 +32,15 @@
    
     -output: float
 
+    -사용 예시
+   # 함수 사용 예시 인풋
+input_km = 0.2
+input_height = 177
+input_weight = 65
+
+# 함수 호출
+calories = find_closest_calories(way_effect, input_km, input_height, input_weight)
+print(calories)
  
  
 
