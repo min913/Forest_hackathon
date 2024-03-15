@@ -10,6 +10,7 @@ logger.setLevel(logging.INFO)
 my_path = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 program_list_data = pd.read_csv(os.path.join(my_path, "datasets/program_list.csv"))
 forest_list_df = program_list_data.loc[program_list_data["category"] == "숲길", :].reset_index(drop=True)
+hiking_list_df = program_list_data.loc[program_list_data["category"] == "등산로", :].reset_index(drop=True)
 
 def __find_closest_location(mtn = pd.DataFrame, input_coord=dict[str, float]):
     # 문자열로 저장된 'coordinate' 데이터를 딕셔너리로 변환
@@ -35,7 +36,7 @@ def __find_closest_location(mtn = pd.DataFrame, input_coord=dict[str, float]):
 
     # 가장 거리가 가까운 행 찾기
 
-    return mtn[:5]
+    return mtn[:10]
     
 
 
@@ -44,7 +45,8 @@ def __find_closest_location(mtn = pd.DataFrame, input_coord=dict[str, float]):
 input_coord = {'lat': 128.950001, 'lng': 37.600002} #사용자 위치
 
 def run():
-    closest_location = __find_closest_location(forest_list_df, input_coord) #함수 부르기
-    print(closest_location)
-    return closest_location
+    forest = __find_closest_location(forest_list_df, input_coord) #함수 부르기
+    hiking = __find_closest_location(hiking_list_df, input_coord) #함수 부르기
+    
+    return pd.concat([forest, hiking])
 
