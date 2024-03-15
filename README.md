@@ -6,7 +6,9 @@
    -input_df: result_df(최종/산림체험효과.csv)
    
    -input_parameter: 사용자 정보(height_input, age_input, weight_input, gender_input)
-     -예시) # 사용자 입력 예시
+   -input_parameter 형식: height_input = float, age_input = float, weight_input =float, gender_input = 'F' or 'M'
+
+   -사용 예시) # input 예시
             height_input = 160
             age_input = 20
             weight_input = 54
@@ -16,7 +18,8 @@
             difference = find_closest_match(result_df,height_input, age_input, gender_input,weight_input )
             difference=difference.round(2)
             print(f"찾은 '차이' 값: {difference}")
-     -형식) height_input = float, age_input = float, weight_input =float, gender_input = 'F' or 'M'
+
+ 
    
    -output: float
  
