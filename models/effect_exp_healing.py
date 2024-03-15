@@ -1,7 +1,18 @@
+import logging
+import os
 import numpy as np
+import pandas as pd
+import ast
+from fastapi import Depends, FastAPI, HTTPException, Request
+from . import effect_exp_healing, effect_forest_hiking
+logger = logging.getLogger("uvicorn")
+logger.setLevel(logging.INFO)
+
+my_path = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+exp_healing_effect_data = pd.read_csv(os.path.join(my_path, "datasets/exp_healing_effect_data.csv"))
 
 
-def find_closest_match(df, height, age, gender, weight):
+def __find_closest_match(df, height, age, gender, weight) -> float:
     # 필터링된 데이터프레임을 가중치로 정렬하는 함수
     def sort_by_weight_difference(filtered_df):
         filtered_df["체중 차이"] = np.abs(filtered_df["체중"] - weight)
@@ -26,3 +37,6 @@ def find_closest_match(df, height, age, gender, weight):
             return match.iloc[0]["차이"]
 
     return 50.12
+
+def run(height, age, gender, weight):
+    return __find_closest_match(exp_healing_effect_data, height, age, gender, weight)
