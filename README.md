@@ -35,12 +35,12 @@
 
     -사용 예시
 
-   #함수 사용 예시 인풋
+   # 함수 사용 예시 인풋
    input_km = 0.2
    input_height = 177
    input_weight = 65
 
-   #함수 호출
+   # 함수 호출
    calories = find_closest_calories(way_effect, input_km, input_height, input_weight)
    print(calories)
  
@@ -51,3 +51,19 @@
 1. 산림체험 및 치유
 - 사용 모델: all-MiniLM-L6-v2
 - input_df
+
+
+2. 등산로,숲길 추천:
+- input_df_등산로: mtn(최종/산목록.csv)
+
+- input_df_숲길: *미업로드
+
+- input_parameter: input_coord(사용자 거리)
+
+- 함수 호출 예시:
+
+  # input 
+  input_coord = {'lat': 128.950001, 'lng': 37.600002}
+
+  # 함수 호출
+closest_location = find_closest_location(mtn, input_coord)
