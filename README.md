@@ -46,7 +46,8 @@
    calories = find_closest_calories(way_effect, input_km, input_height, input_weight)
    print(calories)
  
- -사용 예시_숲길
+ -사용 예시_산
+
 
 #함수 호출 예제
 
