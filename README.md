@@ -24,6 +24,7 @@
 3. 숲길, 등산로 운동량
     
     -숲길_input_df: result_df(최종/숲길 칼로리.csv)
+   
     -등산로_input_df: result_df(최종/등산로 칼로리.csv) *아직 업로드x
    
     -input_parameter: 등산로 거리(input_km), 사용자 정보(input_height, input_weight)
