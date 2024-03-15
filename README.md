@@ -1,15 +1,19 @@
 # Forest_hackathon
 
-Healing effect prediction(수정 예정): 
-- 기능: 산림 치유 효과(운동량 위주) 예측 
-- data.csv: 산림빅데이터 거래소의 "산림치유 효과분석 건강측정정보" 데이터 
-- pred: 결과 값
-- 사용 모델: XGboost
+## Healing effect prediction:
+
+1. 운동효과_산림체험,치유:
+   -input_df: result_df(최종/산림체험효과.csv)
+   
+   -input_parameter: 사용자 정보(height_input, age_input, weight_input, gender_input)
+     -예시) height_input = 160, age_input = 20, weight_input = 54, gender_input = 'F'
+     -형식) height_input = float, age_input = float, weight_input =float, gender_input = 'F' or 'M'
+   
+   -output: float
+ 
 
 
-Recommendation:
-- 기능: 사용자 정보(성별,나이,직업)에 따라 선호 산림 체험 프로그램 추천
-- input: user 정보
-- db: 선호 산림 체험 검색기록, 산림체험 프로그램
-- output: 산림체험 프로그램 목록 list(80개)
+## Recommendation:
+1. 산림체험 및 치유
 - 사용 모델: all-MiniLM-L6-v2
+- input_df
