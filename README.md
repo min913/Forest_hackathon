@@ -34,12 +34,12 @@
 
     -사용 예시
 
-   함수 사용 예시 인풋
+   #함수 사용 예시 인풋
    input_km = 0.2
    input_height = 177
    input_weight = 65
 
-   함수 호출
+   #함수 호출
    calories = find_closest_calories(way_effect, input_km, input_height, input_weight)
    print(calories)
  
