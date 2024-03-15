@@ -10,13 +10,14 @@
    
    -input_parameter 형식: height_input = float, age_input = float, weight_input =float, gender_input = 'F' or 'M'
 
-   -사용 예시) # input 예시
+   -사용 예시)
+   #input 예시
             height_input = 160
             age_input = 20
             weight_input = 54
             gender_input = 'F'
 
-            # 함수 실행 및 결과 출력
+   #함수 실행 및 결과 출력
             difference = find_closest_match(result_df,height_input, age_input, gender_input,weight_input )
             difference=difference.round(2)
             print(f"찾은 '차이' 값: {difference}")
