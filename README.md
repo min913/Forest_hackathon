@@ -3,6 +3,7 @@
 ## Healing effect prediction:
 
 1. 운동효과_산림체험,치유:
+
    -input_df: result_df(최종/산림체험효과.csv)
    
    -input_parameter: 사용자 정보(height_input, age_input, weight_input, gender_input)
@@ -19,7 +20,8 @@
             difference=difference.round(2)
             print(f"찾은 '차이' 값: {difference}")
 
- 2. 숲길, 등산로 운동량 
+2. 숲길, 등산로 운동량
+    
     -숲길_input_df: result_df(최종/숲길칼로리.csv)
     -input_parameter: 등산로 거리(input_km), 사용자 정보(input_height, input_weight)
     -input_parameter 형식: 모두 float
