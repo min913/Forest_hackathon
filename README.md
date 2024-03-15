@@ -2,7 +2,7 @@
 
 ## Healing effect prediction:
 
-1. 운동효과_산림체험,치유:
+1. 운동효과_산림체험:
 
    -input_df: result_df(최종/산림체험효과.csv)
    
@@ -62,8 +62,8 @@
 
 - 함수 호출 예시:
 
-  # input 
-  input_coord = {'lat': 128.950001, 'lng': 37.600002}
+  #input: input_coord = {'lat': 128.950001, 'lng': 37.600002}
 
-  # 함수 호출
-closest_location = find_closest_location(mtn, input_coord)
+  #함수 호출: closest_location = find_closest_location(mtn, input_coord)
+
+- ouput: 해당하는 산이 있는 mtn의 행 추출 
